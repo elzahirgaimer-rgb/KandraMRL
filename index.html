@@ -1,0 +1,779 @@
+html_content = """<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kandra - Salón de Belleza & Cuidado del Cabello</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #fafafa;
+            --text-main: #1a1a1a;
+            --text-muted: #666666;
+            --accent: #2c2c2c;
+            --accent-light: #f0f0f0;
+            --gold-subtle: #d4af37;
+            --white: #ffffff;
+            --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .brand-font {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(250, 250, 250, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .logo {
+            font-size: 2rem;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 400;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--text-main);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            color: var(--white);
+            margin-bottom: 80px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1.5s forwards 0.5s;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 35px;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            border: 1px solid var(--white);
+            color: var(--white);
+            background: transparent;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: var(--white);
+            color: var(--text-main);
+        }
+
+        .btn-dark {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-dark:hover {
+            background-color: var(--accent);
+            color: var(--white);
+        }
+
+        /* Sections General */
+        section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Services & Products Grid Layout (Fine-tuned display table alternative for structure) */
+        .grid-container {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: separate;
+            border-spacing: 30px 0px;
+        }
+
+        .grid-row {
+            display: table-row;
+        }
+
+        .grid-item {
+            display: table-cell;
+            background: var(--white);
+            vertical-align: top;
+            border: 1px solid rgba(0,0,0,0.03);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.01);
+            transition: var(--transition);
+        }
+
+        .grid-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+        }
+
+        .item-img {
+            height: 350px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .item-info {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .item-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .item-info p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        /* Exclusive / Promos Section */
+        .exclusive-section {
+            background-color: var(--accent-light);
+            max-width: 100%;
+            padding: 100px 20px;
+        }
+
+        .exclusive-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .split-layout {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        .split-cell {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .split-text {
+            padding-right: 60px;
+        }
+
+        .split-text h3 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .split-text p {
+            margin-bottom: 25px;
+            color: var(--text-muted);
+        }
+
+        .vip-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background-color: var(--accent);
+            color: var(--white);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        /* Contact & Location */
+        .contact-container {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        .contact-info-cell {
+            display: table-cell;
+            vertical-align: top;
+            padding-right: 40px;
+        }
+
+        .map-cell {
+            display: table-cell;
+            vertical-align: top;
+            height: 450px;
+        }
+
+        .contact-item {
+            margin-bottom: 30px;
+        }
+
+        .contact-item i {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        .contact-item h4 {
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .contact-item p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 100%;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--accent);
+            color: var(--white);
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-size: 2.5rem;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .social-links a {
+            color: var(--white);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            opacity: 0.6;
+        }
+
+        footer p {
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            color: #999;
+        }
+
+        /* Modal Dynamics */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            padding: 5px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            transform: scale(0.9);
+            transition: var(--transition);
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-inner {
+            border: 1px solid rgba(0,0,0,0.1);
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--text-main);
+        }
+
+        .modal h3 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+
+        .modal input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .modal input:focus {
+            border-color: var(--accent);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media(max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--bg-color);
+                flex-direction: column;
+                padding: 20px;
+                gap: 20px;
+                text-align: center;
+                border-bottom: 1px solid rgba(0,0,0,0.05);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .grid-container, .grid-row, .grid-item, .split-layout, .split-cell, .contact-container, .contact-info-cell, .map-cell {
+                display: block;
+                width: 100%;
+                padding: 0;
+            }
+
+            .grid-item {
+                margin-bottom: 30px;
+            }
+
+            .split-text {
+                padding-right: 0;
+                margin-bottom: 40px;
+            }
+
+            .contact-info-cell {
+                margin-bottom: 40px;
+            }
+
+            .map-cell {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">Kandra</a>
+            <div class="menu-toggle" id="mobile-menu">
+                <i class="fa-solid degeneration fa-bars"></i>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#productos">Productos</a></li>
+                <li><a href="#selectas">Club Selecto</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <p>Salón de Belleza • Morelia</p>
+            <h1>Una oportunidad más a tu cabello</h1>
+            <a href="#contacto" class="btn">Agendar Cita</a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="servicios">
+        <div class="section-header">
+            <h2>Nuestros Servicios</h2>
+            <p>Diseño y cuidado experto para tu cabello</p>
+        </div>
+        
+        <div class="grid-container">
+            <div class="grid-row">
+                <!-- Servicio 1 -->
+                <div class="grid-item">
+                    <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1560869713-7d0a29430f23?auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="item-info">
+                        <h3>Corte & Estilo Premium</h3>
+                        <p class="price">Desde $450</p>
+                        <p>Diseño personalizado adaptado a tus facciones y tipo de cabello para resaltar tu belleza natural.</p>
+                    </div>
+                </div>
+                <!-- Servicio 2 -->
+                <div class="grid-item">
+                    <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1605497746444-ac9da5848a50?auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="item-info">
+                        <h3>Colorimetría Avanzada</h3>
+                        <p class="price">Desde $1,200</p>
+                        <p>Balayage, luces y cambios globales con productos de alta gama que protegen la fibra capilar.</p>
+                    </div>
+                </div>
+                <!-- Servicio 3 -->
+                <div class="grid-item">
+                    <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="item-info">
+                        <h3>Tratamientos de Hidratación</h3>
+                        <p class="price">Desde $750</p>
+                        <p>Rituales intensivos de restauración y brillo para devolverle la salud y sedosidad total a tu melena.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="productos">
+        <div class="section-header">
+            <h2>Línea de Cuidado</h2>
+            <p>Lleva la experiencia del salón a tu hogar</p>
+        </div>
+
+        <div class="grid-container">
+            <div class="grid-row">
+                <!-- Producto 1 -->
+                <div class="grid-item">
+                    <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1608248597481-496100c80836?auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="item-info">
+                        <h3>Shampoo Reparador Orgánico</h3>
+                        <p class="price">$420</p>
+                        <p>Libre de sulfatos y parabenos, ideal para prolongar el color y nutrir profundamente.</p>
+                    </div>
+                </div>
+                <!-- Producto 2 -->
+                <div class="grid-item">
+                    <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="item-info">
+                        <h3>Mascarilla de Nutrición Extrema</h3>
+                        <p class="price">$580</p>
+                        <p>Tratamiento semanal concentrado para reparar puntas abiertas y reestructurar el cabello dañado.</p>
+                    </div>
+                </div>
+                <!-- Producto 3 -->
+                <div class="grid-item">
+                    <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="item-info">
+                        <h3>Óleo de Argán & Seda</h3>
+                        <p class="price">$390</p>
+                        <p>Sello de brillo y suavidad instantánea termo-protector contra herramientas de calor.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Exclusive Client Dynamics Section -->
+    <section class="exclusive-section" id="selectas">
+        <div class="exclusive-container">
+            <div class="split-layout">
+                <div class="split-cell split-text">
+                    <span class="vip-badge">Exclusivo</span>
+                    <h3>Clientas Selectas Kandra</h3>
+                    <p>Queremos consentir tu lealtad. Formando parte de nuestra comunidad selecta accedes a dinámicas exclusivas mensuales, talleres de peinado, preventas de productos y promociones personalizadas creadas solo para ti.</p>
+                    <p><strong>Dinámica del mes:</strong> Registra tus visitas de este mes y participa por un Kit Completo de Cuidado en Casa y un diseño de color totalmente gratuito.</p>
+                    <button class="btn btn-dark" id="open-modal-btn">Unirse al Club Selecto</button>
+                </div>
+                <div class="split-cell">
+                    <div style="height: 400px; background: url('https://images.unsplash.com/photo-1527799822367-a23354e09623?auto=format&fit=crop&w=800&q=80') center center/cover;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Location Section -->
+    <section id="contacto">
+        <div class="section-header">
+            <h2>Ubicación & Contacto</h2>
+            <p>Visítanos o agenda tu experiencia</p>
+        </div>
+
+        <div class="contact-container">
+            <div class="contact-info-cell">
+                <div class="contact-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <h4>Dirección</h4>
+                    <p>Av. Enrique Ramírez Miguel, Las Américas, 58270 Morelia, Michoacán, México.</p>
+                </div>
+                <div class="contact-item">
+                    <i class="fa-solid fa-phone"></i>
+                    <h4>Teléfono & WhatsApp</h4>
+                    <p>+52 443 123 4567</p>
+                </div>
+                <div class="contact-item">
+                    <i class="fa-solid fa-clock"></i>
+                    <h4>Horarios</h4>
+                    <p>Lunes a Sábado: 10:00 AM - 8:00 PM<br>Domingo: Cerrado</p>
+                </div>
+                <div class="contact-item">
+                    <i class="fa-solid fa-envelope"></i>
+                    <h4>Correo Electrónico</h4>
+                    <p>contacto@kandrasalon.com</p>
+                </div>
+            </div>
+            <div class="map-cell">
+                <div class="map-container">
+                    <!-- Ubicación ilustrativa en zona comercial Av. Enrique Ramírez, Morelia -->
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3756.1774395893345!2d-101.16853752478544!3d19.694432181640107!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842d0e408ecbbcf7%3A0x6bde7a0e3fcd3a9a!2sAv.%20Enrique%20Ram%C3%ADrez%20Miguel%2C%20Morelia%2C%20Mich.!5e0!3m2!1ses-419!2smx!4v1700000000000!5m2!1ses-419!2smx" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">Kandra</div>
+        <ul class="social-links">
+            <li><a href="https://instagram.com/kandra.mrl" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+            <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
+            <li><a href="#"><i class="fa-brands fa-whatsapp"></i></a></li>
+        </ul>
+        <p>&copy; 2026 Kandra Salón. Todos los derechos reservados. Diseñado para resaltar tu verdadera esencia.</p>
+    </footer>
+
+    <!-- Club Selecto Modal -->
+    <div class="modal" id="vip-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-modal-btn">&times;</span>
+            <div class="modal-inner">
+                <h3>Únete al Club Kandra</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 25px;">Ingresa tus datos para recibir invitaciones exclusivas y acceder al sorteo mensual.</p>
+                <form id="vip-form">
+                    <input type="text" placeholder="Nombre Completo" required>
+                    <input type="email" placeholder="Correo Electrónico" required>
+                    <input type="tel" placeholder="Número de WhatsApp" required>
+                    <button type="submit" class="btn btn-dark" style="width:100%; margin-top: 10px;">Enviar Registro</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript code functionality -->
+    <script>
+        // Mobile Navigation Menu Toggle
+        const menuToggle = document.getElementById('mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when a link is clicked
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Modal elements handling
+        const modal = document.getElementById('vip-modal');
+        const openModalBtn = document.getElementById('open-modal-btn');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const vipForm = document.getElementById('vip-form');
+
+        openModalBtn.addEventListener('click', () => {
+            modal.classList.add('active');
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        // Close modal clicking outside content
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+
+        // Form submission
+        vipForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('¡Gracias por registrarte! Pronto recibirás tus beneficios de Clienta Selecta en tu WhatsApp.');
+            modal.classList.remove('active');
+            vipForm.reset();
+        });
+    </script>
+</body>
+</html>
+"""
